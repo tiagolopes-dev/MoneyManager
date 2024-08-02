@@ -4,13 +4,14 @@ import { TfiPlus } from "react-icons/tfi";
 import { Tooltip } from "react-tooltip";
 import { Button } from "../components/Button";
 import { FaRegCircleUser } from "react-icons/fa6";
+import { Link } from "react-router-dom";
 
 export function Home() {
   return (
     <div className="max-w-[1200px] mx-auto h-dvh">
       <div className="">
         <header className="flex justify-end">
-          <FaRegCircleUser size={25} className="mt-2"/>
+          <Link to="/Login" ><FaRegCircleUser size={25} className="mt-2"/></Link> 
         </header>
       </div>
       <div className="bg-[#fafafa] mt-8 rounded-xl p-4">

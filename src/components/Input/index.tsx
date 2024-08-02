@@ -39,4 +39,3 @@ export function Input({ variant, options, ...props }: InputProps) {
   );
 }
 
-export default Input;
