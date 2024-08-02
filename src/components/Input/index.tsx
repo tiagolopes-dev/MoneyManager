@@ -17,7 +17,10 @@ export function Input({ variant, options, ...props }: InputProps) {
 
   if (variant === "select" && options) {
     return (
-      <select className={`${baseStyles} ${variantStyles[variant]}`} {...props}>
+      <select
+        className={`${baseStyles} ${variantStyles[variant]}`}
+        {...(props as React.SelectHTMLAttributes<HTMLSelectElement>)}
+      >
         {options.map((option) => (
           <option key={option} value={option}>
             {option}
@@ -35,3 +38,5 @@ export function Input({ variant, options, ...props }: InputProps) {
     />
   );
 }
+
+export default Input;

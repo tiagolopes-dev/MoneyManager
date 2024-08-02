@@ -30,10 +30,10 @@ export function Register() {
             <br />
             <Button variant="Primary">Registra-se</Button>
             <p className="mt-5 text-gray-600 font-medium">
-            Já possui uma conta? Faça <Link to="/Login" className="text-blue-500 hover:text-blue-700">
+              Já possui uma conta? Faça{" "}
+              <Link to="/Login" className="text-blue-500 hover:text-blue-700">
                 Login
               </Link>
-              
             </p>
           </form>
         </div>
