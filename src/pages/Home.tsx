@@ -5,13 +5,16 @@ import { Tooltip } from "react-tooltip";
 import { Button } from "../components/Button";
 import { FaRegCircleUser } from "react-icons/fa6";
 import { Link } from "react-router-dom";
+import { TableGastos } from "../components/Table";
 
 export function Home() {
   return (
     <div className="max-w-[1200px] mx-auto h-dvh">
-      <div className="">
+      <div>
         <header className="flex justify-end">
-          <Link to="/Login" ><FaRegCircleUser size={25} className="mt-2"/></Link> 
+          <Link to="/Login">
+            <FaRegCircleUser size={25} className="mt-2" />
+          </Link>
         </header>
       </div>
       <div className="bg-[#fafafa] mt-8 rounded-xl p-4">
@@ -44,6 +47,7 @@ export function Home() {
         <div className="p-2">
           <p className="font-bold">Controle de Finanças</p>
         </div>
+        <TableGastos />
       </div>
     </div>
   );

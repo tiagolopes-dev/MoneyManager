@@ -11,7 +11,7 @@ export function Button( {variant, children, ...props}: ButtonProps){
   const variantStyles = {
   Primary: 'bg-blue-700 text-white hover:bg-blue-500',
   Secondary: 'bg-slate-400 text-white hover:bg-slate-500',
-  Danger: 'bg-red-800 text-black border border-gray-300 hover:bg-red-700	',
+  Danger: 'bg-red-800 text-black border border-gray-300 hover:bg-red-700',
 };
 
 return (
