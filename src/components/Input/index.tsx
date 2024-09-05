@@ -2,13 +2,25 @@ import React from "react";
 
 type InputVariant = "text" | "password" | "select" | "date" | "number";
 
-interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+// BaseProps para definir o variant
+interface BaseProps {
   variant: InputVariant;
-  options?: string[];
-  
 }
 
-export function Input({ variant, options, ...props }: InputProps) {
+// Propriedades específicas para o select
+interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
+  variant: "select";
+  options: string[];
+}
+
+// Propriedades específicas para o input
+interface InputProps extends React.InputHTMLAttributes<HTMLInputElement>, BaseProps {
+  variant: Exclude<InputVariant, "select">;
+}
+
+type CombinedProps = InputProps | SelectProps;
+
+export function Input({ variant, ...props }: CombinedProps) {
   const baseStyles = "px-3 py-1 rounded border transition-colors duration-300 h-[35px]";
   const variantStyles = {
     text: "border-gray-300 focus:border-blue-500 focus:ring-blue-500 ",
@@ -18,11 +30,12 @@ export function Input({ variant, options, ...props }: InputProps) {
     number: "border-gray-300 focus:border-green-500 focus:ring-green-500",
   };
 
-  if (variant === "select" && options) {
+  if (variant === "select") {
+    const { options, ...selectProps } = props as SelectProps;
     return (
       <select
         className={`${baseStyles} ${variantStyles[variant]}`}
-        {...(props as React.SelectHTMLAttributes<HTMLSelectElement>)}
+        {...selectProps}
       >
         {options.map((option) => (
           <option key={option} value={option}>
@@ -37,8 +50,7 @@ export function Input({ variant, options, ...props }: InputProps) {
     <input
       type={variant}
       className={`${baseStyles} ${variantStyles[variant]}`}
-      {...props}
+      {...(props as React.InputHTMLAttributes<HTMLInputElement>)}
     />
   );
 }
-

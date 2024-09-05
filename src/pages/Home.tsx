@@ -1,5 +1,5 @@
 import { GrDocumentPdf } from "react-icons/gr";
-import { FaDoorOpen, FaEyeSlash } from "react-icons/fa";
+import { FaDoorOpen } from "react-icons/fa";
 import { TfiPlus } from "react-icons/tfi";
 import { Tooltip } from "react-tooltip";
 import { Button } from "../components/Button";
@@ -80,7 +80,9 @@ export function Home() {
     getGastos();
   }, []);
 
-  const openModalDeleteGasto = (id: string) => {
+  const openModalDeleteGasto = (id: string | undefined) => {
+    if(!id)return
+    
     setGastoToDelete(id);
     setShowModalDelete(true);
   };

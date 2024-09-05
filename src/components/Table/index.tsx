@@ -6,7 +6,7 @@ import { LuPencilLine } from "react-icons/lu";
 interface TableProps {
   itens: Gasto[];
   openModalForEdit: (gasto: Gasto) => void;
-  openModalForDelete: (gastoId: string) => void;
+  openModalForDelete: (gastoId: string | undefined) => void;
 }
 
 export function TableGastos({
