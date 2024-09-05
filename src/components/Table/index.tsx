@@ -1,85 +1,66 @@
 import { BsTrash } from "react-icons/bs";
 import { Tooltip } from "react-tooltip";
+import { Gasto } from "../../types";
+import { LuPencilLine } from "react-icons/lu";
 
-export function TableGastos() {
-  const dados = [
-    {
-      data: "09/04/2024",
-      compra: "açai",
-      valor: "19",
-      local: "Sabn'Energy",
-    },
-    {
-      data: "09/04/2024",
-      compra: "açai",
-      valor: "19",
-      local: "Sabn'Energy",
-    },
-    {
-      data: "09/04/2024",
-      compra: "açai",
-      valor: "19",
-      local: "Sabn'Energy",
-    },
-    {
-      data: "09/04/2024",
-      compra: "açai",
-      valor: "19",
-      local: "Sabn'Energy",
-    },
-    {
-      data: "09/04/2024",
-      compra: "açai",
-      valor: "19",
-      local: "Sabn'Energy",
-    },
-    {
-      data: "09/04/2024",
-      compra: "açai",
-      valor: "19",
-      local: "Sabn'Energy",
-    },
-    {
-      data: "09/04/2024",
-      compra: "açai",
-      valor: "19",
-      local: "Sabn'Energy",
-    },
-    {
-      data: "09/04/2024",
-      compra: "açai",
-      valor: "19",
-      local: "Sabn'Energy",
-    },
-];
+interface TableProps {
+  itens: Gasto[];
+  openModalForEdit: (gasto: Gasto) => void;
+  openModalForDelete: (gastoId: string) => void;
+}
 
-
+export function TableGastos({
+  itens,
+  openModalForEdit,
+  openModalForDelete,
+}: TableProps) {
   return (
     <div className="overflow-x-auto">
-      <table className="min-w-full bg-white border border-gray-200">
+      <table className="min-w-full bg-white border border-gray-100">
         <thead>
           <tr>
             <th className="py-2 px-2 border-b text-left">Data</th>
-            <th className="py-2 px-2 border-b text-left">Compra</th>
+            <th className="py-2 px-2 border-b text-left">Título</th>
             <th className="py-2 px-2 border-b text-left">Valor</th>
-            <th className="py-2 px-2 border-b text-left">Local</th>
+            <th className="py-2 px-2 border-b text-left">Descrição</th>
+            <th className="py-2 px-2 border-b text-left">Ações</th>
           </tr>
         </thead>
         <tbody>
-          {dados.map((line, index) => (
-            <tr key={index}>
-              <td className="py-2 px-2 border-b">{line.data}</td>
-              <td className="py-2 px-2 border-b">{line.compra}</td>
-              <td className="py-2 px-2 border-b">{line.valor}</td>
-              <td className="py-2 px-2 border-b flex">{line.local}</td>
-              <td>
+          {itens.map((line, index) => (
+            <tr key={index} className=" hover:bg-slate-200">
+              <td className="py-2 px-2 border-b">{line.createdAt}</td>
+              <td className="py-2 px-2 border-b">{line.title}</td>
+              <td
+                className={`py-2 px-2 border-b ${
+                  line.category === "Entrada"
+                    ? "text-[#009D19]"
+                    : "text-[#DB082C]"
+                }`}
+              >
+                {line.price}
+              </td>
+              <td className="py-2 px-2 border-b">{line.description}</td>
+
+              <td className="py-2 px-2 border-b ">
+                <button
+                  data-tooltip-id="editar-tooltip"
+                  data-tooltip-content="Editar Gastos"
+                  onClick={() => openModalForEdit(line)}
+                >
+                  <LuPencilLine className="mr-2" />
+                </button>
+
                 <button
                   data-tooltip-id="delete-tooltip"
-                  data-tooltip-content="Deletar Gastos"
+                  data-tooltip-content="Excluir Gastos"
+                  onClick={() => openModalForDelete(line.id)}
                 >
-                  <BsTrash color="#8B0000"/>
+                  <BsTrash color="#8B0000" />
                 </button>
+
                 <Tooltip id="delete-tooltip"></Tooltip>
+                <Tooltip id="editar-tooltip"></Tooltip>
               </td>
             </tr>
           ))}
