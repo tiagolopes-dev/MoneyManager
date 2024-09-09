@@ -39,7 +39,7 @@ export function Register() {
       <div className="flex-1 bg-[#ffffff] flex-col justify-center items-center hidden lg:flex">
         <img src={image} />
       </div>
-      <div className="flex-1 bg-pink-200 flex flex-col justify-center items-center">
+      <div className="flex-1 bg-gray flex flex-col justify-center items-center">
         <img src={image} className="flex lg:hidden w-auto h-28 mb-8" />
         <div className="text-center w-3/4 md:w-1/2">
           <h2 className="text-xl font-semibold mb-4">Faça seu Cadastro</h2>

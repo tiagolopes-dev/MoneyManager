@@ -22,7 +22,7 @@ type CombinedProps = InputProps | SelectProps;
 
 export function Input({ variant, ...props }: CombinedProps) {
   const baseStyles = "px-3 py-1 rounded border transition-colors duration-300 h-[35px]";
-  const variantStyles = {
+  const variantStyles = { 
     text: "border-gray-300 focus:border-blue-500 focus:ring-blue-500 ",
     password: "border-gray-300 focus:border-red-500 focus:ring-red-500 ",
     select: "border-gray-300 focus:border-green-500 focus:ring-green-500 ",

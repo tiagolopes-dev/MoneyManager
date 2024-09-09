@@ -20,7 +20,7 @@ export function Login() {
         { email, password }
       );
 
-      window.localStorage.setItem("token", token);
+      await window.localStorage.setItem("token", token);
       toast.success("Usuário logado!", {
         position: "top-right",
       });
