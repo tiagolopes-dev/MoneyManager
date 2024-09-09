@@ -1,9 +1,9 @@
 import { GrDocumentPdf } from "react-icons/gr";
-import { FaDoorOpen } from "react-icons/fa";
+// import { FaDoorOpen } from "react-icons/fa";
 import { TfiPlus } from "react-icons/tfi";
 import { Tooltip } from "react-tooltip";
 import { Button } from "../components/Button";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import { TableGastos } from "../components/Table";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -11,14 +11,19 @@ import { Gasto } from "../types";
 import { ModalGasto } from "../components/ModalGasto";
 import { ModalDelete } from "../components/ModalDelete";
 import { toast } from "react-toastify";
+import { Link, useNavigate } from "react-router-dom";
+import { FaDoorOpen } from "react-icons/fa";
 
 export function Home() {
+  const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
   const [mode, setMode] = useState<"create" | "update">("create");
   const [gastos, setGastos] = useState<Gasto[]>([]);
   const [gastoForEdit, setGastoForEdit] = useState<Gasto>({} as Gasto);
   const [gastoToDelete, setGastoToDelete] = useState("");
   const [showModalDelete, setShowModalDelete] = useState(false);
+  const tokenUser = window.localStorage.getItem("token");
+
 
   const openModalByMode = (mode: "create" | "update") => {
     setMode(mode);
@@ -77,12 +82,17 @@ export function Home() {
   };
 
   useEffect(() => {
+    if(!tokenUser) {
+      navigate("/Login")
+      return
+    }
+
     getGastos();
   }, []);
 
   const openModalDeleteGasto = (id: string | undefined) => {
     if(!id)return
-    
+
     setGastoToDelete(id);
     setShowModalDelete(true);
   };
@@ -125,12 +135,22 @@ export function Home() {
         <div>
           <header className="flex justify-end">
             <button className="mt-2 p-1 border-2 border-black rounded-md hover:bg-slate-200 hover:border-slate-700">
-              <Link
+              {tokenUser ? (
+                <Link
                 to="/Login"
-                className="flex gap-1 items-center text-red-950"
-              >
-                <FaDoorOpen /> Sair
-              </Link>
+                onClick={() => localStorage.removeItem('token')}
+                  className="flex gap-1 items-center text-red-950"
+                >
+                  <FaDoorOpen /> Sair
+                </Link>
+              ) : ( 
+                <Link
+                  to="/Login"
+                  className="flex gap-1 items-center text-red-950"
+                >
+                  <FaDoorOpen /> Entrar
+                </Link>
+              )}
             </button>
           </header>
         </div>
