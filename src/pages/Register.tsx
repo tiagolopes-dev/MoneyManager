@@ -14,23 +14,27 @@ export function Register() {
 
   const submitForm = async () => {
     try {
-        await axios.post(
-        "https://gastos-api-9er7.onrender.com/register",
-        { email, password }
-      );
+      await axios.post("https://gastos-api-9er7.onrender.com/register", {
+        email,
+        password,
+      });
 
       toast.success("Usuário criado com sucesso!", {
         position: "top-right",
       });
 
-      navigate("/Login")
-
-      
+      navigate("/Login");
     } catch (err) {
       const error = err as AxiosError;
       toast.error(error.response?.data as string, {
         position: "top-right",
       });
+    }
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (event.key === "Enter") {
+      submitForm();
     }
   };
 
@@ -50,11 +54,10 @@ export function Register() {
               placeholder="Digite seu Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              onKeyDown={handleKeyDown} // Captura a tecla Enter
             />
             <br />
-            <label className="mb-2 text-left font-semibold">Seu Nome:</label>
-            <Input variant="text" placeholder="Digite seu Nome" />
-            <br />
+
             <label className="mb-2 text-left font-semibold">Sua Senha:</label>
             <Input
               variant="password"
@@ -63,11 +66,12 @@ export function Register() {
               onChange={(e) => setPassword(e.target.value)}
             />
             <br />
-            <label className="mb-2 text-left font-semibold">
-              Repita a Senha:
-            </label>
-            <Input variant="password" placeholder="Digite sua senha" />
+
+            <label className="mb-2 text-left font-semibold">Repita a Senha:</label>
+            <Input variant="password" placeholder="Digite sua senha" 
+            onKeyDownCapture={handleKeyDown} />
             <br />
+
             <Button variant="Primary" onClick={submitForm}>
               Registra-se
             </Button>

@@ -11,10 +11,12 @@ import { useNavigate } from "react-router-dom";
 export function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const submitForm = async () => {
     try {
+      setLoading(true);
       const { data: token } = await axios.post(
         "https://gastos-api-9er7.onrender.com/login",
         { email, password }
@@ -25,13 +27,20 @@ export function Login() {
         position: "top-right",
       });
 
-      navigate("/")
-
+      navigate("/");
     } catch (err) {
-      const error = err as AxiosError
+      const error = err as AxiosError;
       toast.error(error.response?.data as string, {
         position: "top-right",
       });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (event.key === "Enter") {
+      submitForm();
     }
   };
 
@@ -41,7 +50,7 @@ export function Login() {
         <img src={image} />
       </div>
       <div className="flex-1 bg-gray flex flex-col justify-center items-center">
-        <img src={image} className="flex lg:hidden w-auto h-28 mb-8"/>
+        <img src={image} className="flex lg:hidden w-auto h-28 mb-8" />
         <div className="text-center w-3/4 md:w-1/2">
           <h2 className="text-xl font-semibold mb-4">Faça seu login</h2>
           <div className="flex flex-col">
@@ -59,10 +68,17 @@ export function Login() {
               placeholder="Digite sua senha"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              onKeyDownCapture={handleKeyDown}
             />
             <br />
             <Button variant="Primary" onClick={submitForm}>
-              Login
+              {loading ? (
+                <div className="flex justify-center items-center">
+                  <div className="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-6 w-6"></div>
+                </div>
+              ) : (
+                "Login"
+              )}
             </Button>
           </div>
           <p className="mt-4 text-gray-600 font-medium">

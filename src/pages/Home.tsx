@@ -1,9 +1,6 @@
-import { GrDocumentPdf } from "react-icons/gr";
-// import { FaDoorOpen } from "react-icons/fa";
 import { TfiPlus } from "react-icons/tfi";
 import { Tooltip } from "react-tooltip";
 import { Button } from "../components/Button";
-// import { Link } from "react-router-dom";
 import { TableGastos } from "../components/Table";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -23,7 +20,6 @@ export function Home() {
   const [gastoToDelete, setGastoToDelete] = useState("");
   const [showModalDelete, setShowModalDelete] = useState(false);
   const tokenUser = window.localStorage.getItem("token");
-
 
   const openModalByMode = (mode: "create" | "update") => {
     setMode(mode);
@@ -82,16 +78,16 @@ export function Home() {
   };
 
   useEffect(() => {
-    if(!tokenUser) {
-      navigate("/Login")
-      return
+    if (!tokenUser) {
+      navigate("/Login");
+      return;
     }
 
     getGastos();
   }, []);
 
   const openModalDeleteGasto = (id: string | undefined) => {
-    if(!id)return
+    if (!id) return;
 
     setGastoToDelete(id);
     setShowModalDelete(true);
@@ -120,9 +116,9 @@ export function Home() {
   };
   const calcularSaldoTotal = (): number => {
     return gastos.reduce((saldo, transaction) => {
-      if (transaction.category === 'Entrada') {
+      if (transaction.category === "Entrada") {
         return saldo + parseFloat(transaction.price);
-      } else{
+      } else {
         return saldo - parseFloat(transaction.price);
       }
       return saldo;
@@ -137,13 +133,13 @@ export function Home() {
             <button className="mt-2 p-1 border-2 border-black rounded-md hover:bg-slate-200 hover:border-slate-700">
               {tokenUser ? (
                 <Link
-                to="/Login"
-                onClick={() => localStorage.removeItem('token')}
+                  to="/Login"
+                  onClick={() => localStorage.removeItem("token")}
                   className="flex gap-1 items-center text-red-950"
                 >
                   <FaDoorOpen /> Sair
                 </Link>
-              ) : ( 
+              ) : (
                 <Link
                   to="/Login"
                   className="flex gap-1 items-center text-red-950"
@@ -163,14 +159,6 @@ export function Home() {
             </div>
             <div className="flex gap-3 self-end md:self-start">
               <Tooltip id="pdf-tooltip"></Tooltip>
-
-              <button
-                className="bg-transparent border-2 border-blue-700 p-2 px-2 rounded-md hover:bg-blue-100"
-                data-tooltip-id="pdf-tooltip"
-                data-tooltip-content="Exportar PDF"
-              >
-                <GrDocumentPdf size={18} />
-              </button>
 
               <Button
                 variant="Primary"
