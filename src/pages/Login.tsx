@@ -74,7 +74,7 @@ export function Login() {
             <Button variant="Primary" onClick={submitForm}>
               {loading ? (
                 <div className="flex justify-center items-center">
-                  <div className="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-6 w-6"></div>
+                  <div className="animate-spin loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-6 w-6"></div>
                 </div>
               ) : (
                 "Login"

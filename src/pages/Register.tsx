@@ -10,10 +10,20 @@ import { Input } from "../components/Input";
 export function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const submitForm = async () => {
+    if (password !== confirmPassword) {
+      toast.error("As senhas não coincidem!", {
+        position: "top-right",
+      });
+      return;
+    }
+
     try {
+      setLoading(true);
       await axios.post("https://gastos-api-9er7.onrender.com/register", {
         email,
         password,
@@ -29,6 +39,8 @@ export function Register() {
       toast.error(error.response?.data as string, {
         position: "top-right",
       });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -54,7 +66,7 @@ export function Register() {
               placeholder="Digite seu Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              onKeyDown={handleKeyDown} // Captura a tecla Enter
+              onKeyDown={handleKeyDown}
             />
             <br />
 
@@ -68,12 +80,23 @@ export function Register() {
             <br />
 
             <label className="mb-2 text-left font-semibold">Repita a Senha:</label>
-            <Input variant="password" placeholder="Digite sua senha" 
-            onKeyDownCapture={handleKeyDown} />
+            <Input
+              variant="password"
+              placeholder="Repita sua senha"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              onKeyDownCapture={handleKeyDown}
+            />
             <br />
 
             <Button variant="Primary" onClick={submitForm}>
-              Registra-se
+              {loading ? (
+                <div className="flex justify-center items-center">
+                  <div className="animate-spin loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-6 w-6"></div>
+                </div>
+              ) : (
+                "Registra-se"
+              )}
             </Button>
             <p className="mt-5 text-gray-600 font-medium">
               Já possui uma conta? Faça{" "}
